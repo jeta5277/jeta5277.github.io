@@ -3,32 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
     <title>Home</title>
-    <nav>
-        <h1><a href="home.html" tabindex="1">Jeremy Tang</a></h1>
-        <ul>
+    <style>
+        :root {
+            /* my color palette */
+            --color-primary: #001219;
+            --color-secondary: #A31621;
+            --color-accent: #004e89;
+            --color-neutral: #001427;
+            --color-highlight: #fdf0d5;
+
+            --color-background: white;
+            --color-text-dark: var(--color-neutral);
+            --color-text-light: white;
+
+            /* typography */
+            --font-primary: 'Cal Sans', sans-serif;
+            --font-secondary: 'Funnel Sans', sans-serif;
+
+            /* Spacing System */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            padding: var(--spacing-xl);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+
+        /* Typography Styles */
+        h1 {
+            font-size: 3.25rem;
+            font-weight: 400;
+            font-style: italic;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+
+        h2 {
+
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-secondary);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-primary);
+        }
+
+        .body-text {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .small-text {
+            font-size: 0.75rem;
+            color: color-mix(in srgb, var(--color-text-dark) 70%, transparent);
+        }
+
+        /* Color Palette Section */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .color-swatch {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+                /* Component Styles */
+        .button {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: background-color 0.3s ease, transform 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .button:hover {
+            background-color: color-mix(in srgb, var(--color-primary) 80%, black);
+            border-color: var(--color-secondary);
+            transform: scale(1.05);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+            background-color: var(--color-secondary);
+        }
+
+        .link {
+            color: var(--color-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease, text-decoration-color 0.3s;
+        }
+
+        .link:hover {
+            color: var(--color-accent);
+            text-decoration: underline;
+            text-decoration-color: var(--color-highlight);
+        }
+
+        .link:visited {
+            color: var(--color-neutral);
+        }
+
+        /* nav bar css*/
+        .navbar {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        }
+
+        .navlinks {
+        padding: 0;
+        margin: 0;
+        margin-right: 10px;
+        list-style-type: none;
+        display: flex;
+        gap: 80px;
+        }
+
+        .navlinks li a {
+        color: black;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        }
+
+        /* Spacing Demonstration */
+        .spacing-demo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .spacing-block {
+            background-color: var(--color-primary);
+            height: 50px;
+        }
+
+        .intro {
+            margin-top: 170px;
+            margin-bottom: 270px; 
+        }
+
+        .cat {
+            background-color: var(--color-highlight);
+            margin-left: -2rem;
+            margin-right:-2rem;
+            height: fit-content;
+            padding: 90px;
+        }
+        
+        .catpict {
+            margin-top: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1>Hey, Jeremy!</h1>
+        <ul class="navlinks">
             <li><a href="about.html" tabindex="2">About</a></li>
             <li><a href="experience.html" tabindex="3">Experience</a></li>
             <li><a href="contact.html" tabindex="4">Contact</a></li>
         </ul>
     </nav>
-</head>
 
-<body>
+    <div>
+        <section class="intro">
+            <h2 tabindex="5">I'm a novice UX/UI designer from Denver, Colorado. <br> The last name is <strong>Tang</strong>.</h2>
+        </section>
 
+        
+        <section class="cat">
+            <h3 tabindex="6">This is my cat, Garlic.</h3>
+            <img src="cat.jpeg" alt="An orange cat on a white bed" width="400" tabindex="7" class="catpict">
+        </section>
 
-    <h2 tabindex="5" >Hey guys its just me</h2>
-    <h3 tabindex="6">cat</h3>
-    <img src="cat.jpeg" alt="an orange cat on a white bed" width="400" tabindex="7">
+        <section>
+            <h2>Color Palette</h2>
+            <div class="color-palette">
+                <div class="color-swatch" style="background-color: var(--color-primary); color: var(--color-text-light);">
+                    <strong>Primary Color</strong>
+                    <p>#001219</p>
+                    <small>Contrast Ratio: 19.08:1</small>
+                </div>
+                <div class="color-swatch" style="background-color: var(--color-secondary); color: var(--color-text-light);">
+                    <strong>Secondary Color</strong>
+                    <p>#A31621</p>
+                    <small>Contrast Ratio: 7.80:1</small>
+                </div>
+                <div class="color-swatch" style="background-color: var(--color-accent); color: var(--color-text-light);">
+                    <strong>Accent Color</strong>
+                    <p>#004E89</p>
+                    <small>Contrast Ratio: 8.57:1</small>
+                </div>
+                <div class="color-swatch" style="background-color: var(--color-neutral); color: var(--color-text-light);">
+                    <strong>Neutral Color</strong>
+                    <p>#001427</p>
+                    <small>Contrast Ratio: 18.59:1</small>
+                </div>
+                <div class="color-swatch" style="background-color: var(--color-highlight); color: var(--color-text-dark);">
+                    <strong>Highlight Color</strong>
+                    <p>#FDF0D5</p>
+                    <small>Contrast Ratio: 16.47:1</small>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Typography</h2>
+            <h1>Heading 1 - Cal Sans Italic</h1>
+            <h2>Heading 2 - Cal Sans</h2>
+            <h3>Heading 3 - Cal Sans</h3>
+            <p class="body-text">Body Text - Using Cal Sans with a comfortable line height and readable size.</p>
+            <p class="small-text">Small Text - Subtle and understated, perfect for annotations and footnotes.</p>
+        </section>
+
+        <section>
+            <h2>Spacing System</h2>
+            <div class="spacing-demo">
+                <div class="spacing-block" style="width: var(--spacing-xs)"></div>
+                <div class="spacing-block" style="width: var(--spacing-sm)"></div>
+                <div class="spacing-block" style="width: var(--spacing-md)"></div>
+                <div class="spacing-block" style="width: var(--spacing-lg)"></div>
+                <div class="spacing-block" style="width: var(--spacing-xl)"></div>
+            </div>
+            <p>Spacing blocks demonstrating size variations from xs to xl</p>
+        </section>
+
+        <section>
+            <h2>Interactive Components</h2>
+            <a href="#" class="button">Primary Button</a>
+            <a href="#" class="link">Standard Link</a>
+            <a href="#" class="link" style="color: turquoise;">Visited Link</a>
+        </section>
+    </div>
 
 </body>
-
-
-
-
-<footer>
-</footer>
-
 
 </html>
