@@ -28,7 +28,7 @@
     }
     
     html {
-        font-size: clamp(12px, 1vw, 16px);
+        zoom: 0.67;
     }
 
     * {
