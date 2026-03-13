@@ -215,7 +215,7 @@
 
     .logo {
         display: flex;
-        width: 375px;
+        width: 300px;
         margin-left: 1rem;
         margin-top: -2rem;
     }
@@ -287,22 +287,15 @@
         margin-top: -6rem;
     }
 
-    .project-text h1 {
-        font-size: 4rem;
-    }
-
     .project-text {
         flex: 1;
-        padding-left: 8rem;
+        padding-left: 6rem;
         display: flex;
         flex-direction: column;
         gap: var(--spacing-md);
-        padding-top: -12rem;
     }
 
     .project-text h2 {
-        font-size: 2rem;
-        color: var(--color-secondary);
         max-width: 500px;
     }
 
@@ -314,10 +307,10 @@
 
     .stack-card {
         position: absolute;
-        width: 260px;
+        width: 190px;
         border-radius: var(--radius-lg);
         box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        top: calc(var(--i) * 80px + 80px);
+        top: calc(var(--i) * 60px + 80px);
         left: calc(var(--i) * -130px + 350px);
         z-index: var(--i);                   
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -327,6 +320,33 @@
         transform: translate(-8px, -8px) scale(1.03);
         box-shadow: 0 16px 48px rgba(0,0,0,0.18);
         z-index: 20;    
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid var(--color-secondary);
+        margin: 4rem;
+        opacity: 15%;
+    }
+
+      .modules-hero {
+        display: flex;
+        align-items: top;
+        min-height: 5vh;
+        gap: 4rem;
+        margin-top: 6em;
+    }
+
+    .modules-text {
+        flex: 1;
+        padding-left: 6rem;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .modules-text h1 {
+        font-size: 2em;
     }
 
     @keyframes rainbow-slide {
