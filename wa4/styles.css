@@ -171,6 +171,7 @@
         font-family: var(--font-secondary);
     }
 
+
     /* Spacing Demonstration */
     .spacing-demo {
         display: flex;
@@ -247,17 +248,17 @@
     }
 
     .card-text h2{
-        font-size: 3rem;
+        font-size: 2.5rem;
         color: black;
     }
 
     .scroll-arrow {
         position: absolute;
-        bottom: 3rem;        /* increase this, e.g. 3rem or 4rem */
+        bottom: 2rem;    
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(200%);
         color: var(--color-primary);
-        opacity: 1;        /* was 0.5, bump this up */
+        opacity: 1;  
         animation: bob 2s ease-in-out infinite;
         cursor: pointer;
     }
@@ -270,13 +271,14 @@
     .rainbow-bar {
         width: calc(100% + 4rem);
         margin-left: -2rem;
-        height: 50vh;
+        margin-right: -2rem;
+        height: 55vh;
         background: linear-gradient(
             90deg,
             #ff6b6b, #ffa94d, #ffd43b, #69db7c, #4dabf7, #845ef7, #f783ac, #ff6b6b
         );
         background-size: 200% 100%;
-        animation: rainbow-slide 45s linear infinite;
+        animation: rainbow-slide 35s linear infinite;
     }
 
     .project-hero {
@@ -284,7 +286,7 @@
         align-items: center;
         min-height: 80vh;
         gap: 4rem;
-        margin-top: -6rem;
+        margin-top: -3rem;
     }
 
     .project-text {
@@ -296,7 +298,7 @@
     }
 
     .project-text h2 {
-        max-width: 500px;
+        max-width: 600px;
     }
 
     .project-stack {
@@ -307,7 +309,7 @@
 
     .stack-card {
         position: absolute;
-        width: 190px;
+        width: 250px;
         border-radius: var(--radius-lg);
         box-shadow: 0 8px 32px rgba(0,0,0,0.12);
         top: calc(var(--i) * 60px + 80px);
@@ -348,6 +350,55 @@
     .modules-text h1 {
         font-size: 2em;
     }
+
+    .logo {
+        transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .logo:hover {
+        transform: scale(1.08);
+        opacity: 0.95;
+    }
+
+    .photo-hero {
+        columns: 3;
+        column-gap: 12px;
+        padding: 8rem 8rem;
+        margin-top: 2rem;
+        padding: 8em;
+        
+    }
+
+    .photo-hero img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        padding: 0.3px;
+    }
+    
+    .about-intro{
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        align-items: top;
+        padding-left: 8em;
+        padding-top: 1em;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .footer-content .logo {
+        width: 150px;
+        margin-bottom: var(--spacing-lg);
+    }
+
 
     @keyframes rainbow-slide {
         0%   { background-position: 0% 0%; }
