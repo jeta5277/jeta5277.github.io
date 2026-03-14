@@ -1,6 +1,6 @@
     :root {
         /* my color palette */
-        --color-primary: #black;
+        --color-primary: black;
         --color-secondary: #4A5568;
         --color-accent: #004e89;
         --color-neutral: #4A5568;
@@ -74,6 +74,11 @@
         font-weight: 400;
         margin-bottom: var(--spacing-sm);
         color: var(--color-primary);
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-md);
     }
 
     .body-text {
@@ -157,20 +162,26 @@
     }
 
     .navlinks {
-        margin-right: 4rem;
+        margin-right: 5rem;
         list-style-type: none;
         display: flex;
         gap: 5rem;
-        margin-top: -5rem;
+        margin-top: -2rem;
     }
 
     .navlinks li a {
-        color: black;
+        color: var(--color-secondary);
         text-decoration: none;
-        font-size: 1.25rem;
+        font-size: 1.50rem;
         font-family: var(--font-secondary);
+        transition: transform 0.4s ease, color 0.4s ease;
+        display: inline-block; 
     }
 
+    .navlinks li a:hover {
+        color: var(--color-primary);
+        transform: scale(1.12);
+    }
 
     /* Spacing Demonstration */
     .spacing-demo {
@@ -192,6 +203,10 @@
         align-items: top;
         padding-left: 8em;
         padding-top: 1em;
+    }
+    
+    .intro h2 {
+        color: var(--color-secondary);
     }
 
     .cat {
@@ -361,25 +376,23 @@
     }
 
     .photo-hero {
-        columns: 3;
-        column-gap: 12px;
-        padding: 8rem 8rem;
-        margin-top: 2rem;
-        padding: 8em;
-        
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        padding: 4rem 16rem;
     }
 
     .photo-hero img {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 16px;
         display: block;
-        border-radius: 12px;
-        margin-bottom: 12px;
-        padding: 0.3px;
+        padding: 1rem;
     }
     
     .about-intro{
-        height: 10vh;
+        height: 20vh;
         display: flex;
         flex-direction: column;
         align-items: top;
@@ -395,8 +408,58 @@
     }
 
     .footer-content .logo {
-        width: 150px;
+        width: 100px;
         margin-bottom: var(--spacing-lg);
+    }
+
+    .about-preview {
+        display: flex;
+        align-items: center;
+        gap: 6rem;
+        padding: 8rem 16rem;
+    }
+
+    .about-preview-image {
+        flex: 0 0 380px;
+    }
+
+    .about-preview-image img {
+        width: 100%;
+        border-radius: var(--radius-lg);
+        display: block;
+    }
+
+    .about-preview-text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .about-label {
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-secondary);
+        font-family: var(--font-secondary);
+        font-weight: 600;
+    }
+
+    .about-btn {
+        display: inline-block;
+        width: fit-content;
+        padding: 0.75rem 1.75rem;
+        border: 2px solid black;
+        color: black;
+        text-decoration: none;
+        font-family: var(--font-secondary);
+        letter-spacing: 0.05em;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-top: var(--spacing-md);
+    }
+
+    .about-btn:hover {
+        background-color: black;
+        color: white;
     }
 
 
