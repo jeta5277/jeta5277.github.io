@@ -254,7 +254,7 @@
 
     .scroll-arrow {
         position: absolute;
-        bottom: 2rem;    
+        bottom: 1rem;    
         left: 50%;
         transform: translateX(200%);
         color: var(--color-primary);
@@ -272,7 +272,7 @@
         width: calc(100% + 4rem);
         margin-left: -2rem;
         margin-right: -2rem;
-        height: 55vh;
+        height: 60vh;
         background: linear-gradient(
             90deg,
             #ff6b6b, #ffa94d, #ffd43b, #69db7c, #4dabf7, #845ef7, #f783ac, #ff6b6b
