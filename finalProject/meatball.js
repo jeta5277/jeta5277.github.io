@@ -3,6 +3,11 @@ const ctx = canvas.getContext('2d');
 const W = canvas.width;
 const H = canvas.height;
 
+const FONT_SM   = '9px "Cause", sans-serif';
+const FONT_XS   = '10px "Cause", sans-serif';
+const FONT_BOLD = 'bold 14px "Cause", sans-serif';
+const FONT_ICON = 'bold 13px "Cause", sans-serif';
+
 /* ── Layout ── */
 const DIVIDER_X = Math.floor(W * 0.62);
 const LEFT_CX   = DIVIDER_X / 2;
@@ -18,32 +23,41 @@ const EXTRUDERS = [
 ];
 
 /* ── Plate / Scale ── */
-const PLATE_CX   = RIGHT_CX;
-const PLATE_Y    = H - 70;
-const PLATE_RX   = 60, PLATE_RY = 10;
-const DISPLAY_X  = PLATE_CX - 45;
-const DISPLAY_Y  = H - 48;
-const DISPLAY_W  = 90, DISPLAY_H = 28;
+const PLATE_CX  = RIGHT_CX;
+const PLATE_Y   = H - 70;
+const PLATE_RX  = 60, PLATE_RY = 10;
+const DISPLAY_X = PLATE_CX - 45;
+const DISPLAY_Y = H - 48;
+const DISPLAY_W = 90, DISPLAY_H = 28;
 
-/* ── Reset button ── */
-const RESET_R = 11;
-const RESET_X = DISPLAY_X + DISPLAY_W + 10 + RESET_R;
+/* ── Buttons ── */
+const BTN_R = 11;
+
+// Reset — right of display box
+const RESET_X = DISPLAY_X + DISPLAY_W + 10 + BTN_R;
 const RESET_Y = DISPLAY_Y + DISPLAY_H / 2;
 
+// Stop — left of display box
+const STOP_X = DISPLAY_X - 10 - BTN_R;
+const STOP_Y = DISPLAY_Y + DISPLAY_H / 2;
+
 /* ── Catcher ── */
-const CATCHER_W = 44, CATCHER_H = 8;
-const CATCHER_Y = H - 100;
+const CATCHER_W   = 44, CATCHER_H = 8;
+const CATCHER_Y   = H - 100;
 const CATCH_LEFT  = 10;
 const CATCH_RIGHT = DIVIDER_X - 10;
 
 /* ── State ── */
-let catcherX   = LEFT_CX;
-let meatballs  = [];
-let plateStack = [];
+let catcherX    = LEFT_CX;
+let meatballs   = [];
+let plateStack  = [];
 let plateWeight = 0;
 let frame       = 0;
-let resetHover  = false;
-let onRight     = false;
+let stopped     = false;
+
+let resetHover = false;
+let stopHover  = false;
+let onRight    = false;
 
 /* ── Input ── */
 canvas.addEventListener('mousemove', e => {
@@ -52,14 +66,18 @@ canvas.addEventListener('mousemove', e => {
   const my = (e.clientY - rect.top)  * (H / rect.height);
 
   onRight = mx > DIVIDER_X;
-  if (!onRight) {
+  if (!onRight && !stopped) {
     catcherX = Math.max(CATCH_LEFT + CATCHER_W / 2,
                Math.min(CATCH_RIGHT - CATCHER_W / 2, mx));
   }
 
-  const dx = mx - RESET_X, dy = my - RESET_Y;
-  resetHover = Math.sqrt(dx * dx + dy * dy) <= RESET_R;
-  canvas.style.cursor = resetHover ? 'pointer' : onRight ? 'default' : 'none';
+  const dxr = mx - RESET_X, dyr = my - RESET_Y;
+  resetHover = Math.sqrt(dxr * dxr + dyr * dyr) <= BTN_R;
+
+  const dxs = mx - STOP_X, dys = my - STOP_Y;
+  stopHover = !stopped && Math.sqrt(dxs * dxs + dys * dys) <= BTN_R;
+
+  canvas.style.cursor = (resetHover || stopHover) ? 'pointer' : onRight ? 'default' : 'none';
 });
 
 canvas.addEventListener('mouseleave', () => { onRight = false; });
@@ -68,14 +86,25 @@ canvas.addEventListener('click', e => {
   const rect = canvas.getBoundingClientRect();
   const mx = (e.clientX - rect.left) * (W / rect.width);
   const my = (e.clientY - rect.top)  * (H / rect.height);
-  const dx = mx - RESET_X, dy = my - RESET_Y;
-  if (Math.sqrt(dx * dx + dy * dy) <= RESET_R) doReset();
+
+  const dxr = mx - RESET_X, dyr = my - RESET_Y;
+  if (Math.sqrt(dxr * dxr + dyr * dyr) <= BTN_R) { doReset(); return; }
+
+  const dxs = mx - STOP_X, dys = my - STOP_Y;
+  if (!stopped && Math.sqrt(dxs * dxs + dys * dys) <= BTN_R) { doStop(); return; }
 });
+
+/* ── Stop ── */
+function doStop() {
+  stopped = true;
+  meatballs = []; // clear any mid-air balls
+}
 
 /* ── Reset ── */
 function doReset() {
-  meatballs  = [];
-  plateStack = [];
+  stopped     = false;
+  meatballs   = [];
+  plateStack  = [];
   plateWeight = 0;
   EXTRUDERS[0].nextSpawn = frame;
   EXTRUDERS[1].nextSpawn = frame + 80;
@@ -113,7 +142,7 @@ function drawExtruders() {
     ctx.fillRect(ext.x - EXT_W / 2, EXT_Y, EXT_W, EXT_H);
 
     ctx.fillStyle = '#f7f3ee';
-    ctx.font = '9px sans-serif';
+    ctx.font = FONT_SM;
     ctx.textAlign = 'center';
     ctx.fillText(ext.label, ext.x, EXT_Y + EXT_H / 2 + 4);
 
@@ -124,10 +153,10 @@ function drawExtruders() {
 }
 
 function drawLegend() {
-  const cy      = EXT_Y + EXT_H / 2;
-  const DOT_R   = 7, GAP = 14, spacing = 65;
-  const totalW  = spacing * (EXTRUDERS.length - 1);
-  const startX  = RIGHT_CX - totalW / 2;
+  const cy     = EXT_Y + EXT_H / 2;
+  const DOT_R  = 7, GAP = 14, spacing = 65;
+  const totalW = spacing * (EXTRUDERS.length - 1);
+  const startX = RIGHT_CX - totalW / 2;
 
   EXTRUDERS.forEach((ext, i) => {
     const lx = startX + i * spacing;
@@ -137,7 +166,7 @@ function drawLegend() {
     ctx.fill();
 
     ctx.fillStyle = '#5f5e5a';
-    ctx.font = '10px sans-serif';
+    ctx.font = FONT_XS;
     ctx.textAlign = 'center';
     ctx.fillText(ext.label, lx, cy + DOT_R + GAP);
   });
@@ -158,20 +187,37 @@ function drawScale() {
   ctx.fillStyle = '#888780';
   ctx.fillRect(DISPLAY_X, DISPLAY_Y, DISPLAY_W, DISPLAY_H);
   ctx.fillStyle = '#2c2c2a';
-  ctx.font = 'bold 14px sans-serif';
+  ctx.font = FONT_BOLD;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(Math.min(plateWeight, 100), PLATE_CX, DISPLAY_Y + DISPLAY_H / 2);
   ctx.textBaseline = 'alphabetic';
   ctx.textAlign = 'left';
 
-  /* reset button */
-  ctx.fillStyle = resetHover ? '#444441' : '#888780';
+  /* stop button — hidden once stopped */
+  if (!stopped) {
+    ctx.fillStyle = stopHover ? '#962020' : '#c0392b';
+    ctx.beginPath();
+    ctx.arc(STOP_X, STOP_Y, BTN_R, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#f7f3ee';
+    ctx.font = FONT_ICON;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('■', STOP_X, STOP_Y + 1);
+    ctx.textBaseline = 'alphabetic';
+    ctx.textAlign = 'left';
+  }
+
+  /* reset button — grey while running, green when stopped */
+  ctx.fillStyle = stopped
+    ? (resetHover ? '#1e8449' : '#27ae60')
+    : (resetHover ? '#444441' : '#888780');
   ctx.beginPath();
-  ctx.arc(RESET_X, RESET_Y, RESET_R, 0, Math.PI * 2);
+  ctx.arc(RESET_X, RESET_Y, BTN_R, 0, Math.PI * 2);
   ctx.fill();
   ctx.fillStyle = '#f7f3ee';
-  ctx.font = 'bold 13px sans-serif';
+  ctx.font = FONT_ICON;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('↺', RESET_X, RESET_Y + 1);
@@ -189,6 +235,7 @@ function drawPlateStack() {
 }
 
 function drawCatcher() {
+  if (stopped) return;
   ctx.fillStyle = '#534ab7';
   ctx.beginPath();
   ctx.roundRect(catcherX - CATCHER_W / 2, CATCHER_Y, CATCHER_W, CATCHER_H, 4);
@@ -213,6 +260,8 @@ function getStackTop() {
 /* ── Update ── */
 function update() {
   frame++;
+
+  if (stopped) return;
 
   EXTRUDERS.forEach(ext => {
     if (frame >= ext.nextSpawn) {
